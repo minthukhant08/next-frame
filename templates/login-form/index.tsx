@@ -8,8 +8,9 @@ import {
 import {
     z
 } from "zod"
-import { 
-    Form } from '@/components/ui/form'
+import {
+    Form
+} from '@/components/ui/form'
 import {
     Field,
     FieldLabel,
@@ -21,35 +22,49 @@ import {
 import {
     Input
 } from "@/components/ui/input"
+import { signIn } from "next-auth/react"
+import { useRouter } from "next/navigation"
 
 const formSchema = z.object({
-    username: z.string().min(1, "Please enter username."),
+    email: z.email().min(1, "Please enter email."),
     password: z.string().min(1, "please enter password.")
 });
 
 export default function LoginForm() {
-
+    const router = useRouter();
     const form = useForm<z.infer<typeof formSchema>>({
+        defaultValues: {
+            email: 'bob@mail.com',
+            password: 'password'
+        },
         resolver: zodResolver(formSchema),
     })
 
     function onSubmit(values: z.infer<typeof formSchema>) {
-       console.log(values)
+        signIn('credentials', {
+            redirect: false,
+            email: values.email,
+            password: values.password
+        }).then((response) => {
+            if (response?.ok) {
+                router.replace("/dashboard")
+            }
+        })
     }
 
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 max-w-3xl mx-auto py-10">
                 <Field>
-                    <FieldLabel htmlFor="username">Username</FieldLabel>
+                    <FieldLabel htmlFor="username">Email</FieldLabel>
                     <Input
-                        id="username"
-                        placeholder="Enter username"
+                        id="email"
+                        placeholder="Enter email"
 
-                        {...form.register("username")}
+                        {...form.register("email")}
                     />
 
-                    <FieldError>{form.formState.errors.username?.message}</FieldError>
+                    <FieldError>{form.formState.errors.email?.message}</FieldError>
                 </Field>
                 <Field>
                     <FieldLabel htmlFor="password">Password</FieldLabel>

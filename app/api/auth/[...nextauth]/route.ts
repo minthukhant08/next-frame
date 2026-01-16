@@ -1,18 +1,39 @@
-import NextAuth from "next-auth"
-import DiscordProvider from "next-auth/providers/discord"
-import GoogleProvider from "next-auth/providers/google"
-
-export const authOptions = {
+import NextAuth, { AuthOptions, User } from "next-auth"
+import CredentialsProvider from "next-auth/providers/credentials"
+import authAPI from '@/api/auth'
+export const authOptions : AuthOptions = {
   providers: [
-    DiscordProvider({
-        clientId: "1358635915236474882",
-        clientSecret: "Df541binc1At3iWxE6D7jPoS3LrkpLVB"
-    }),
-    GoogleProvider({
-      clientId: "",
-      clientSecret: ""
+    CredentialsProvider({
+      credentials: {
+        email: { label: "Email", type: "text", placeholder: "jsmith" },
+        password: { label: "Password", type: "password" }
+      },
+      async authorize(credentials, req) {
+        const result = await authAPI.login({ email: credentials?.email!, password: credentials?.password! })
+        const user: User = result.data.data
+
+        if (user) {
+          return user
+        } else {
+          return null
+        }
+      }
     })
   ],
+  callbacks: {
+    async jwt({ token, user }) {
+      return { ...user, ...token }
+    },
+    async session({ session, token }) {
+      if (token) {
+        session.user = token
+      }
+      return session
+    },
+  },
+  session: {
+    strategy: 'jwt',
+  },
 }
 
 const handler = NextAuth(authOptions)

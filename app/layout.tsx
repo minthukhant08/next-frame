@@ -1,6 +1,7 @@
 
 import "./globals.css";
 import ClientSessionProvider from "@/providers/session-provider";
+import { ToastContainer } from 'react-toastify';
 
 export default function RootLayout({
   children,
@@ -15,6 +16,7 @@ export default function RootLayout({
         <ClientSessionProvider>
         {children}
         </ClientSessionProvider>
+        <ToastContainer />
       </body>
     </html>
   );
