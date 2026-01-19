@@ -1,9 +1,7 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import axios from "axios";
-import { error } from "console";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import { config } from "process";
 
 const instance = axios.create({
     baseURL: process.env.BASE_URL + "/api"
@@ -25,6 +23,7 @@ instanceWithAuth.interceptors.response.use(async (response) => {
     if(response.status == 401){
         redirect("/signout")
     }
+    console.log('response...', response)
     return response
 }, async (error) => {
         console.log(error, 're.........')

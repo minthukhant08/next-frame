@@ -2,7 +2,7 @@ import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader,
 import Image from "next/image"
 export type CatgegoryProp = {
     className?: string,
-    category: Cateogry
+    category: Category
 }
 
 export default function CategoryCard({ className, category }: CatgegoryProp) {

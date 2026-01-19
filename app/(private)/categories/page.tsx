@@ -1,23 +1,8 @@
-import catAPI from '@/api/categories'
-import CategoryCard from '@/components/category-card'
-import { toast } from 'react-toastify';
+import Categories from '@/templates/category-table'
+export default async function CategoryPage() {
 
-export default async function Categories() {
-
-    const getCategories = async () =>{
-        try {
-            const res = await catAPI.all()
-            return res.data.data
-        } catch (error) {
-            console.log(error)
-            return []
-        }
-    }
-
-    const categories = await getCategories()
-
-   
-    return <div className='grid gap-2 grid-cols-4'>
-        { categories && categories.map((cat) => <CategoryCard key={cat.id} category={cat}/>)}
+    return <div className='w-full'>
+       <Categories/>
+        {/* { categories && categories.map((cat) => <CategoryCard key={cat.id} category={cat}/>)} */}
     </div>
 }

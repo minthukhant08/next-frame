@@ -1,4 +1,4 @@
-type Cateogry = {
+type Category = {
     id: number,
     name: string
     image: string

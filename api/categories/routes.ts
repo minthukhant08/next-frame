@@ -3,5 +3,5 @@ export default {
     find: "/categories/",
     store: "/categories",
     update: "/categories/",
-    delete: "/categoreis/"
+    delete: "/categories/"
 }
