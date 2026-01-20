@@ -23,10 +23,8 @@ instanceWithAuth.interceptors.response.use(async (response) => {
     if(response.status == 401){
         redirect("/signout")
     }
-    console.log('response...', response)
     return response
 }, async (error) => {
-        console.log(error, 're.........')
     if (error.response.status == 401) {
         redirect("/signout")
     }

@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button"
 import { ColumnDef } from "@tanstack/react-table"
 import Image from "next/image"
 import { useProductDialogStore } from "./store"
+import { deleteProduct } from "./actions"
 
 export const columns: ColumnDef<Product>[] = [
     {
@@ -43,8 +44,11 @@ export const columns: ColumnDef<Product>[] = [
         accessorKey: "action",
         header: "Actions",
         cell: ({ row }) => {
-            const { setOpen } = useProductDialogStore()
-            return <Button onClick={() => setOpen(true)}>Edit</Button>
+            const { setOpen, setProduct } = useProductDialogStore()
+            return <div>
+                 <Button onClick={() => { setProduct(row.original); setOpen(true); }}>Edit</Button>
+                 <Button onClick={() => deleteProduct(row.original.id!)}>Delete</Button>
+            </div>
         }
     },
 ]

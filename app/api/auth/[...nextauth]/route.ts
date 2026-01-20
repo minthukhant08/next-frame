@@ -1,7 +1,7 @@
 import NextAuth, { AuthOptions, User } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 import authAPI from '@/api/auth'
-export const authOptions : AuthOptions = {
+export const authOptions: AuthOptions = {
   providers: [
     CredentialsProvider({
       credentials: {
@@ -9,12 +9,17 @@ export const authOptions : AuthOptions = {
         password: { label: "Password", type: "password" }
       },
       async authorize(credentials, req) {
-        const result = await authAPI.login({ email: credentials?.email!, password: credentials?.password! })
-        const user: User = result.data.data
-
-        if (user) {
-          return user
-        } else {
+        try {
+          const result = await authAPI.login({ email: credentials?.email!, password: credentials?.password! })
+          const user: User = result.data.data
+          console.log(result, 'res....')
+          if (user) {
+            return user
+          } else {
+            return null
+          }
+        } catch (error) {
+          console.log(error)
           return null
         }
       }

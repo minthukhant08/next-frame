@@ -4,3 +4,7 @@ type HTTPResponse<T> = {
     message: string
     data: T
 }
+
+interface SearchParams {
+	[key: string]: string
+}
