@@ -47,6 +47,6 @@ export default function ProductsTemplate({ products, categories }: ProductsTempl
         <Button onClick={openCreateDialog}>Create</Button>
         <ProductDialog categories={transformCategories(categories)} />
         <DataTable columns={columns} data={products} />
-        <PaginationComponent total={6} baseUrl="/products"/>
+        <PaginationComponent total={6}/>
     </div>
 }
