@@ -1,6 +1,8 @@
 import ProductsTemplate from "@/templates/products";
-export default function ProductsPage() {
+import { getAllProducts } from "@/templates/products/actions";
+export default async function ProductsPage() {
+    const products = await getAllProducts();
     return <div>
-        <ProductsTemplate/>
+        <ProductsTemplate products={products}/>
     </div>
 }

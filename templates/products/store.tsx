@@ -1,17 +1,17 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
-type Store = {
-    count: number,
-    increaseCount: () => void,
+type ProductDialogStore = {
+    isOpen: boolean,
+    setOpen: (open : boolean) => void,
 }
 
-export const useProductStore = create<Store>()(persist((set) => (
+export const useProductDialogStore = create<ProductDialogStore>()(persist((set) => (
     {
-        count: 0,
-        increaseCount: () => set((state) => ({ ...state, count: state.count + 1 })),
+        isOpen: false,
+        setOpen: (open) => set((state) => ({ ...state, isOpen: open })),
     }
 ),
     {
-        name: 'product store'
+        name: 'product dialog store'
     }))

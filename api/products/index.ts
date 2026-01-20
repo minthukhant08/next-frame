@@ -1,4 +1,4 @@
-import axios from "@/api"
+import { instanceWithAuth as axios } from "@/api"
 import routes from '@/api/products/routes'
 export default {
     all: () => axios.get<HTTPResponse<Product[]>>(routes.resource),
