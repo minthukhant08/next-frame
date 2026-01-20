@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { ColumnDef } from "@tanstack/react-table"
 import Image from "next/image"
 import { createCategory, deleteCategory, getAllCategories } from '@/templates/category-table/actions'
-import { CategoryTable } from "./data-table"
+import { DataTable } from "@/components/data-table"
 import { useEffect, useState } from "react"
 import CategoryDialog from "./create-dialog"
 
@@ -66,7 +66,7 @@ export default function Categories() {
         
         <div className="p-10">
             <div className="pb-4"> <CategoryDialog onCreate={storeCategory} /> </div>
-            <CategoryTable columns={columns} data={categories} />
+            <DataTable columns={columns} data={categories} />
         </div>
     </div>
 }
