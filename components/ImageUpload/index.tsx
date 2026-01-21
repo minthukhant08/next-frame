@@ -15,7 +15,7 @@ export default function ImageUpolad({ onUpload , maxSize, width, height}: ImageU
     const [error, setError] = useState<string>("")
     const fileInputRef = useRef<HTMLInputElement>(null)
     const MAX_SIZE = maxSize * 1024 * 1024 
-    
+
     const handleUploadClick = (e: React.MouseEvent<HTMLDivElement>) => {
         fileInputRef.current?.click()
     }
@@ -36,7 +36,7 @@ export default function ImageUpolad({ onUpload , maxSize, width, height}: ImageU
 
     return <div>
         {
-            image ? <Image src={image} alt="as" width={120} height={120} onClick={handleUploadClick} />
+            image ? <Image src={image} alt="as" width={width} height={height} onClick={handleUploadClick} />
                 :
                 <div onClick={handleUploadClick}>Upload UI here</div>
         }
