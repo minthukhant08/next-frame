@@ -10,7 +10,8 @@ declare module 'next-auth' {
 		address: string,
 		status: number,
 		gender: string,
-		accessToken: string
+		accessToken: string,
+		role: string
 	}
 
 	interface Session {
@@ -27,6 +28,7 @@ declare module 'next-auth/jwt' {
 		address: string,
 		status: number,
 		gender: string,
-		accessToken: string
+		accessToken: string,
+		role:string
 	}
 }

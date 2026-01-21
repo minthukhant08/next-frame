@@ -8,3 +8,8 @@ type Product = {
     category_name?: string,
     status: "Active" | "Expired"
 }
+
+type ProductListResonse = {
+    total: number,
+    data: Product[]
+}

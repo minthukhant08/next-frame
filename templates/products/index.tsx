@@ -11,10 +11,11 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { PaginationComponent } from "@/components/pagination";
 
 type ProductsTemplateProp = {
-    products: Product[]
+    products: Product[],
+    totalProduct: number,
     categories: Category[]
 }
-export default function ProductsTemplate({ products, categories }: ProductsTemplateProp) {
+export default function ProductsTemplate({ products, categories, totalProduct }: ProductsTemplateProp) {
     const { setOpen, setProduct } = useProductDialogStore()
     const [search, setSearch] = useState<string>("")
     const router = useRouter()
@@ -47,6 +48,6 @@ export default function ProductsTemplate({ products, categories }: ProductsTempl
         <Button onClick={openCreateDialog}>Create</Button>
         <ProductDialog categories={transformCategories(categories)} />
         <DataTable columns={columns} data={products} />
-        <PaginationComponent total={6}/>
+        <PaginationComponent total={totalProduct}/>
     </div>
 }
