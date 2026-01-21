@@ -25,6 +25,7 @@ import { createProduct, updateProduct } from "./actions"
 import { useEffect, useState } from "react"
 import SelectBox, { item } from "@/components/select-box"
 import { Spinner } from "@/components/ui/spinner"
+import ImageUpolad from "@/components/ImageUpload"
 
 
 const formSchema = z.object({
@@ -32,9 +33,7 @@ const formSchema = z.object({
     description: z.string().min(1, "Description is required"),
     price: z.number().min(0),
     category: z.number(),
-    status: z.boolean(),
-    image: z
-        .instanceof(FileList).nullable(),
+    status: z.boolean()
 })
 
 export type ProductDialogProp = {
@@ -43,11 +42,11 @@ export type ProductDialogProp = {
 export default function ProductDialog({ categories }: ProductDialogProp) {
     const { isOpen, setOpen, product } = useProductDialogStore()
     const [loading, setLoading] = useState<boolean>(false)
+    const [image, setImage ] = useState<string>()
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
             name: product?.name ?? "",
-            image: null,
             description: product?.description ?? "",
             price: product?.price ?? 0,
             category: product?.category_id ?? 0,
@@ -58,11 +57,11 @@ export default function ProductDialog({ categories }: ProductDialogProp) {
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         const data = new FormData()
         data.append("name", values.name)
-        values.image && data.append("image", values.image[0])
         data.append("description", values.description)
         data.append("price", values.price + "")
         data.append("category_id", values.category + "")
         data.append("status", values.status ? '1' : '0')
+        image && data.append("image", image)
         setLoading(true)
         if (product?.id){
             await updateProduct(product?.id!, data)
@@ -77,7 +76,6 @@ export default function ProductDialog({ categories }: ProductDialogProp) {
     useEffect(() => {
         form.reset({
             name: product?.name ?? "",
-            image: null,
             description: product?.description ?? "",
             price: product?.price ?? 0,
             category: product?.category_id ?? 0,
@@ -109,17 +107,9 @@ export default function ProductDialog({ categories }: ProductDialogProp) {
                             <Input id="description" {...form.register("description")} />
                             <FieldError>{form.formState.errors.description?.message}</FieldError>
                         </Field>
-
                         <Field>
-                            <FieldLabel htmlFor="image">Product Image</FieldLabel>
-                            <Input
-                                id="image"
-                                placeholder="upload image"
-                                {...form.register("image")}
-                                accept="image/png, image/jpeg, image/jpg"
-                                type="file"
-                            />
-                            <FieldError>{form.formState.errors.image?.message}</FieldError>
+                            <FieldLabel>Product Image</FieldLabel>
+                            <ImageUpolad onUpload={setImage} maxSize={2} width={150} height={150} />
                         </Field>
 
                         <Field>

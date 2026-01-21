@@ -5,5 +5,6 @@ type LoginResponse = {
     address: string,
     status: number,
     gender: string,
-    accessToken: string
+    accessToken: string,
+    role: string
 }

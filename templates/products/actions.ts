@@ -5,7 +5,6 @@ import { revalidateByPath } from '@/utils/actions'
 export const getAllProducts = async (query: string) => {
     try {
         const res = await productAPI.all(query)
-        console.log(res, 'res..')
         return res.data.data
     } catch (error) {
         console.log(error, 'errr')

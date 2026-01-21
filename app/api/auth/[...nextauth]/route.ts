@@ -12,7 +12,6 @@ export const authOptions: AuthOptions = {
         try {
           const result = await authAPI.login({ email: credentials?.email!, password: credentials?.password! })
           const user: User = result.data.data
-          console.log(result, 'res....')
           if (user) {
             return user
           } else {

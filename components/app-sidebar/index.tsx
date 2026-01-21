@@ -68,7 +68,7 @@ export async function AppSidebar() {
                     </SidebarMenuButton>
                   </SidebarMenuItem>)
                 }else{
-                  return <></>
+                  return <div key={item.title}></div>
                 }
               }
               )}
